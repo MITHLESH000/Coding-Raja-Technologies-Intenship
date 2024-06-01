@@ -171,12 +171,7 @@ a:hover {
 }
 
 /* hero section  start*/
-/* .hero--section {
-    width: 100%;
-    height: 80vh;
-    overflow: hidden;
-    background-color: #212121;
-} */
+
 
 .hero-section {
     display: flex;
@@ -399,18 +394,7 @@ a:hover {
 
 /* footer ends */
 
-/* extra */
-/* .wing{
-    height: 90vh;
-    width: 100%;
-}
-.wing img{
-    position: absolute;
-    z-index: 3;
-    height: 800px;
-    width: 800px;
-    overflow: hidden;
-} */
+
 
 
 
