@@ -7,25 +7,6 @@ const User = require("../models/userModels");
 const mongoose = require("mongoose");
 const Blog = require("../models/blogModels");
 
-//access cookie userData function
-// const userName = (data)=>{
-//     try {
-
-//         const userData = data;
-//            if(!userData){
-//                console.log(`user is not logedin redirected from userProfile route`)
-//                return
-//             }else{
-//                 const user=JSON.parse(userData);
-//                 const userName = user.username;
-//                 console.log(userName);
-//                 return userName;
-//             }
-//     } catch (error) {
-//         console.log(error+"userName function error");
-//     }
-// }
-
 // Middleware to parse cookies
 router.use(cookieParser());
 // Middleware to parse URL-encoded data (form data)
@@ -39,7 +20,7 @@ router.use(express.static(path.join(__dirname, "../public")));
 router.get("/editor", (req, res) => {
     const userData = req.cookies.userData; // access the 'userData' cookie
     if (!userData) {
-        console.log(`user is not logedin redirected from userProfile route`);
+        // console.log(`user is not logedin redirected from userProfile route`);
         return res.redirect("/login");
     } else {
         const user = JSON.parse(userData); // converting cookie JSON string to normal string
@@ -65,13 +46,11 @@ router.get("/search", async (req, res) => {
 router.get("/searchBlog", async (req, res) => {
     try {
         const blogId = req.query.id;
-        console.log(`blogid:${blogId}`);
+        // console.log(`blogid:${blogId}`);
         const userData = req.cookies.userData; // Access the 'userData' cookie
 
         if (!userData) {
-            console.log(
-                "User is not logged in, redirected from userProfile route"
-            );
+            // console.log("User is not logged in, redirected from userProfile route");
             return res.redirect("/login");
         } else {
             const user = JSON.parse(userData); // Convert cookie JSON string to an object
@@ -101,9 +80,7 @@ router.get("/blogPage", async (req, res) => {
     try {
         const userData = req.cookies.userData; // access the 'userData' cookie
         if (!userData) {
-            console.log(
-                `user is not logedin redirected from userProfile route`
-            );
+            // console.log(`user is not logedin redirected from userProfile route` );
             return res.redirect("/login");
         } else {
             const user = JSON.parse(userData); // converting cookie JSON string to normal string
@@ -148,9 +125,7 @@ router.post("/updateUser", async (req, res) => {
         const userdata = req.cookies.userData; // access the 'userData' cookie
         const { userName, userEmail } = req.body;
         if (!userdata) {
-            console.log(
-                `user is not logedin redirected from userProfile route`
-            );
+            // console.log(`user is not logedin redirected from userProfile route`);
             return res.redirect("/login");
         } else {
             const userData = JSON.parse(userdata); // converting cookie JSON string to normal string
@@ -185,9 +160,7 @@ router.get("/userProfile",async (req, res) => {
         // access userName from the cookie
         const userData = req.cookies.userData;
         if (!userData) {
-            console.log(
-                `user is not logedin redirected from userProfile route`
-            );
+            // console.log(`user is not logedin redirected from userProfile route`);
             return res.redirect("/login");
         } else {
             const user = JSON.parse(userData);
@@ -206,20 +179,18 @@ router.get("/userProfile",async (req, res) => {
 // Route to handle signup form submission
 router.post("/signupForm", async (req, res) => {
     const {useremail, username, password } = req.body;
-    console.log(
-        `userName: ${username}, password: ${password}Email:${useremail} data from the browser`
-    );
+    // console.log(`userName: ${username}, password: ${password}Email:${useremail} data from the browser`);
     try {
         const existingUser = await User.findOne({ username: username });
         if (existingUser) {
-            console.log("User already exists. Prompting login.");
+            // console.log("User already exists. Prompting login.");
             return res.render("login", {
                 message: "You already have an account. Please log in.",
             });
         }
         const newUser = new User({email:useremail, username, password, });
         await newUser.save();
-        console.log("Registered successfuly and Login auto");
+        // console.log("Registered successfuly and Login auto");
         res.render("login", {
             message: " Registered successfuly and plese Login",
         });
@@ -251,15 +222,15 @@ router.post("/loginForm", async (req, res) => {
                     maxAge: 900000,
                     httpOnly: true,
                 });
-                console.log(`cookie created`);
+                // console.log(`cookie created`);
                 
                 res.redirect("/blogPage"); // redirect the route to /blogePage
             } else {
                 res.render("login", { message: "Incorrect password" });
-                console.log("Incorrect password");
+                // console.log("Incorrect password");
             }
         } else {
-            console.log("User not found. Please sign up");
+            // console.log("User not found. Please sign up");
             res.render("signup", {
                 message: "User not found. Please sign up."
             });

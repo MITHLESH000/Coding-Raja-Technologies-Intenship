@@ -5,17 +5,13 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const uri = process.env.MONGODB_URI;
-// new nodejs mongoclient
-// const client = new MongoClint(uri, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// });
+
 const connectDB = async () => {
     try {
         await mongoose.connect(uri, {
             
-            // useNewUrlParser: true,
-            // useUnifiedTopology: true,
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
         });
 
         console.log("MongoDB connected");
